@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Create Post</title>
+</head>
+
+<body>
+    <h1>Create Post</h1>
+    <form method="post" action="/posts/create">
+        <label>Title: <input type="text" name="title" required></label><br>
+        <label>Content:<br>
+            <textarea name="content" rows="8" cols="40"></textarea>
+        </label><br>
+        <label>Publish: <input type="checkbox" name="published"></label><br>
+        <button type="submit">Create</button>
+    </form>
+    <a href="/posts">Back to Posts</a>
+</body>
+
+</html>

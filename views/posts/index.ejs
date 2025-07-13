@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Posts</title>
+</head>
+
+<body>
+    <h1>Posts</h1>
+    <a href="/logout">Logout</a> | <a href="/posts/create">Create New Post</a>
+    <ul>
+        <% posts.forEach(post=> { %>
+            <li>
+                <strong>
+                    <%= post.title %>
+                </strong> - <%= post.published ? "Published" : "Draft" %> <br>
+                    <a href="/posts/<%= post.id %>/edit">Edit</a> |
+                    <form style="display:inline" method="post" action="/posts/<%= post.id %>/delete"
+                        onsubmit="return confirm('Delete post?')">
+                        <button type="submit">Delete</button>
+                    </form>
+            </li>
+            <% }) %>
+    </ul>
+</body>
+
+</html>
