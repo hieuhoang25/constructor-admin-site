@@ -1,23 +1,58 @@
-<!DOCTYPE html>
-<html>
+<%- include('../partials/header') %>
 
-<head>
-    <title>Edit Post</title>
-</head>
+    <h1 class="h4 mb-4 fw-bold">Edit Post</h1>
 
-<body>
-    <h1>Edit Post</h1>
-    <form method="post" action="/posts/<%= post.id %>/edit">
-        <label>Title: <input type="text" name="title" value="<%= post.title %>" required></label><br>
-        <label>Content:<br>
-            <textarea name="content" rows="8" cols="40">
+    <form method="POST" action="/posts/<%= post.id %>/edit" onsubmit="return handleSubmit()">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" name="title" id="title" value="<%= post.title %>" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="content" class="form-label">Content</label>
+            <textarea name="content" id="content" rows="10" class="form-control">
                 <%= post.content %>
             </textarea>
-        </label><br>
-        <label>Publish: <input type="checkbox" name="published" <%=post.published ? "checked" : "" %>></label><br>
-        <button type="submit">Update</button>
-    </form>
-    <a href="/posts">Back to Posts</a>
-</body>
+        </div>
 
-</html>
+        <div class="form-check mb-3">
+            <input type="checkbox" name="published" id="published" class="form-check-input" <%=post.published
+                ? "checked" : "" %> />
+            <label class="form-check-label" for="published">Publish</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a href="/posts" class="btn btn-secondary ms-2">Back to Posts</a>
+    </form>
+
+    <!-- TinyMCE -->
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '#content',
+            height: 300,
+            menubar: false,
+            plugins: [
+                'advlist autolink lists link image charmap preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table paste code help wordcount'
+            ],
+            toolbar: 'undo redo | formatselect | bold italic underline | \
+                  alignleft aligncenter alignright alignjustify | \
+                  bullist numlist outdent indent | removeformat | help | image link',
+            automatic_uploads: true,
+            images_upload_url: '/your-image-upload-endpoint', // configure your image upload endpoint here if any
+            // If no image upload endpoint, images can be base64 inline
+            images_upload_handler: function (blobInfo, success, failure) {
+                // For now, fallback to base64 inline image (not recommended for production)
+                success('data:' + blobInfo.blob().type + ';base64,' + blobInfo.base64());
+            }
+        });
+
+        function handleSubmit() {
+            // TinyMCE automatically updates the textarea, so no special sync needed
+            return true;
+        }
+    </script>
+
+    <%- include('../partials/footer') %>

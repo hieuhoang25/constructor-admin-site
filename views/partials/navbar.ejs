@@ -1,9 +1,16 @@
-<nav class="bg-white border-b border-gray-200 shadow-sm">
-    <div class="max-w-4xl mx-auto flex justify-between items-center p-4">
-        <div class="text-xl font-bold">🛠 Admin Panel</div>
-        <div class="space-x-4">
-            <a href="/posts" class="text-blue-600 hover:underline">Posts</a>
-            <a href="/logout" class="text-red-600 hover:underline">Logout</a>
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="/posts">🛠 Admin Panel</a>
+
+        <div class="ms-auto">
+            <ul class="navbar-nav flex-row gap-3">
+                <li class="nav-item">
+                    <a class="nav-link text-primary" href="/posts">Posts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-danger" href="/logout">Logout</a>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>

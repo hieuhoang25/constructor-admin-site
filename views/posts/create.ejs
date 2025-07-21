@@ -1,21 +1,82 @@
-<!DOCTYPE html>
-<html>
+<%- include('../partials/header') %>
 
-<head>
-    <title>Create Post</title>
-</head>
+    <h1 class="h4 mb-4 fw-bold">Create Post</h1>
 
-<body>
-    <h1>Create Post</h1>
-    <form method="post" action="/posts/create">
-        <label>Title: <input type="text" name="title" required></label><br>
-        <label>Content:<br>
-            <textarea name="content" rows="8" cols="40"></textarea>
-        </label><br>
-        <label>Publish: <input type="checkbox" name="published"></label><br>
-        <button type="submit">Create</button>
+    <form method="POST" action="/posts/create" onsubmit="return handleSubmit()">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" name="title" id="title" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="content" class="form-label">Content</label>
+            <textarea name="content" id="content"></textarea>
+        </div>
+
+        <div class="form-check mb-3">
+            <input type="checkbox" name="published" id="published" class="form-check-input" />
+            <label class="form-check-label" for="published">Publish</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create</button>
+        <a href="/posts" class="btn btn-secondary ms-2">Back to Posts</a>
     </form>
-    <a href="/posts">Back to Posts</a>
-</body>
 
-</html>
+    <!-- TinyMCE CDN -->
+    <script src="https://cdn.tiny.cloud/1/wd6xyw5ijst0vdb2emo6md3m6lkmjeccxyzo4ym68rv2qirf/tinymce/7/tinymce.min.js"
+        referrerpolicy="origin"></script>
+
+    <script>
+        tinymce.init({
+            selector: '#content',
+            height: 300,
+            menubar: false,
+            plugins: [
+                // Core editing features
+                'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+                // Your account includes a free trial of TinyMCE premium features
+                // Try the most popular premium features until Jul 31, 2025:
+                'checklist', 'mediaembed', 'casechange', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown', 'importword', 'exportword', 'exportpdf'
+            ],
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            tinycomments_mode: 'embedded',
+            automatic_uploads: true,
+            tinycomments_author: 'Author name',
+            mergetags_list: [
+                { value: 'First.Name', title: 'First Name' },
+                { value: 'Email', title: 'Email' },
+            ],
+            ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
+            images_upload_url: '/upload-image',
+            images_upload_handler: function (blobInfo, success, failure) {
+                const formData = new FormData();
+                formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+                return fetch('/upload-image', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(result => {
+                        if (result.location && typeof result.location === 'string') {
+                            // success(result.location);
+                            console.log('Image uploaded successfully:', result.location);
+                        } else {
+                            failure('Upload failed: No location in response');
+                        }
+                    })
+                    .catch((error) => {
+                        // console.error('Upload error:', error);
+                        // failure('Upload error: ' + error.message);
+                    });
+            }
+        });
+
+        function handleSubmit() {
+            tinymce.triggerSave(); // Make sure content is synced to <textarea>
+            return true;
+        }
+    </script>
+
+
+    <%- include('../partials/footer') %>
