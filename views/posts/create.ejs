@@ -23,8 +23,8 @@
     </form>
 
     <!-- TinyMCE CDN -->
-    <script src="https://cdn.tiny.cloud/1/wd6xyw5ijst0vdb2emo6md3m6lkmjeccxyzo4ym68rv2qirf/tinymce/7/tinymce.min.js"
-        referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/wd6xyw5ijst0vdb2emo6md3m6lkmjeccxyzo4ym68rv2qirf/tinymce/8/tinymce.min.js"
+        referrerpolicy="origin" crossorigin="anonymous"></script>
 
     <script>
         tinymce.init({
@@ -47,29 +47,7 @@
                 { value: 'Email', title: 'Email' },
             ],
             ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
-            images_upload_url: '/upload-image',
-            images_upload_handler: function (blobInfo, success, failure) {
-                const formData = new FormData();
-                formData.append('file', blobInfo.blob(), blobInfo.filename());
-
-                return fetch('/upload-image', {
-                    method: 'POST',
-                    body: formData
-                })
-                    .then(response => response.json())
-                    .then(result => {
-                        if (result.location && typeof result.location === 'string') {
-                            // success(result.location);
-                            console.log('Image uploaded successfully:', result.location);
-                        } else {
-                            failure('Upload failed: No location in response');
-                        }
-                    })
-                    .catch((error) => {
-                        // console.error('Upload error:', error);
-                        // failure('Upload error: ' + error.message);
-                    });
-            }
+            images_upload_url: '/upload-image'
         });
 
         function handleSubmit() {

@@ -43,6 +43,8 @@ function requireAuth(req, res, next) {
 
 // 🔐 Login Page
 app.get('/login', (req, res) => {
+  if (req.session.user) return res.redirect('/posts');
+
   res.render('login', {    
     title: 'Login Page',
     heading: 'Login to Admin Panel',
@@ -134,6 +136,21 @@ app.post('/posts/:id/delete', requireAuth, async (req, res) => {
   res.redirect('/posts');
 });
 
+app.get('/posts/:id/preview', async (req, res) => {
+  const { id } = req.params;
+
+  const { data: post, error } = await supabase
+    .from('posts')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error || !post) {
+    return res.status(404).send('Post not found');
+  }
+
+  res.render('posts/preview', { post });
+});
 
 app.post('/upload-image', upload.single('file'), async (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'No file uploaded' });

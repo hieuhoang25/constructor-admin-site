@@ -17,6 +17,7 @@
                     </p>
                     <div class="mt-2 d-flex gap-3">
                         <a href="/posts/<%= post.id %>/edit" class="text-primary text-decoration-underline">Edit</a>
+                        <a href="/posts/<%= post.id %>/preview" class="text-info text-decoration-underline">Preview</a>
                         <form method="POST" action="/posts/<%= post.id %>/delete" class="d-inline"
                             onsubmit="return confirm('Delete this post?')">
                             <button type="submit"

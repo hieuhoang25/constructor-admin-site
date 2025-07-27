@@ -1,0 +1,20 @@
+<%- include('../partials/header') %>
+
+    <div class="mb-4">
+        <a href="/posts" class="btn btn-secondary">&larr; Back to Posts</a>
+    </div>
+
+    <h1 class="fw-bold mb-3">
+        <%= post.title %>
+    </h1>
+
+    <p class="text-muted mb-4">
+        <%= post.published ? '✅ Published' : '🚧 Draft' %> &middot;
+            <%= new Date(post.created_at).toLocaleString() %>
+    </p>
+
+    <div class="post-content">
+        <%- post.content %> <!-- Render HTML from TinyMCE -->
+    </div>
+
+    <%- include('../partials/footer') %>
