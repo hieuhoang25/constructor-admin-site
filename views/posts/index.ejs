@@ -1,8 +1,8 @@
 <%- include('../partials/header') %>
 
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h4 fw-bold">All Posts</h1>
-        <a href="/posts/create" class="btn btn-success">+ New Post</a>
+        <h1 class="h4 fw-bold">Tất cả bài viết</h1>
+        <a href="/posts/create" class="btn btn-success">+ Tạo bài</a>
     </div>
 
     <ul class="list-unstyled">
@@ -12,16 +12,21 @@
                     <h5 class="card-title">
                         <%= post.title %>
                     </h5>
-                    <p class="card-subtitle mb-2 text-muted">
-                        <%= post.published ? '✅ Published' : '🚧 Draft' %>
+
+                    <p class="card-subtitle mb-2 text-muted"> <em> Ngày tạo:
+                            <%= new Date(post.created_at).toLocaleString('vi-VN', { year: 'numeric' , month: 'long' ,
+                                day: 'numeric' , hour: '2-digit' , minute: '2-digit' }) %>
+                        </em>
                     </p>
                     <div class="mt-2 d-flex gap-3">
-                        <a href="/posts/<%= post.id %>/edit" class="text-primary text-decoration-underline">Edit</a>
-                        <a href="/posts/<%= post.id %>/preview" class="text-info text-decoration-underline">Preview</a>
+                        <a href="/posts/<%= post.id %>/edit" class="text-primary text-decoration-underline">Chỉnh
+                            sửa</a>
+                        <a href="/posts/<%= post.id %>/preview" class="text-info text-decoration-underline">Xem
+                            trước</a>
                         <form method="POST" action="/posts/<%= post.id %>/delete" class="d-inline"
-                            onsubmit="return confirm('Delete this post?')">
+                            onsubmit="return confirm('Bạn có chắc chắn muốn xóa bài viết này không?')">
                             <button type="submit"
-                                class="btn btn-link text-danger text-decoration-underline p-0">Delete</button>
+                                class="btn btn-link text-danger text-decoration-underline p-0">Xoá</button>
                         </form>
                     </div>
                 </div>

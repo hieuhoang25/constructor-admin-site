@@ -1,25 +1,37 @@
 <%- include('../partials/header') %>
 
-    <h1 class="h4 mb-4 fw-bold">Create Post</h1>
+    <h1 class="h4 mb-4 fw-bold">Tạo bài viết</h1>
 
     <form method="POST" action="/posts/create" onsubmit="return handleSubmit()">
         <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
+            <label for="title" class="form-label">Tiêu đề</label>
             <input type="text" name="title" id="title" class="form-control" required />
         </div>
 
         <div class="mb-3">
-            <label for="content" class="form-label">Content</label>
+            <label class="form-label">Ảnh đại diện</label>
+            <input type="file" name="avatar" id="avatar" class="d-none" accept="image/*" />
+            <label for="avatar" class="btn btn-outline-primary">📷 Chọn ảnh</label>
+            <span id="fileName" class="ms-2 text-muted">Chưa có ảnh</span>
+
+            <div class="mt-2">
+                <img id="avatarPreview" src="" alt="Avatar Preview" class="img-thumbnail"
+                    style="max-width: 200px; display: none;">
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="content" class="form-label">Nội dung</label>
             <textarea name="content" id="content"></textarea>
         </div>
 
         <div class="form-check mb-3">
             <input type="checkbox" name="published" id="published" class="form-check-input" />
-            <label class="form-check-label" for="published">Publish</label>
+            <label class="form-check-label" for="published">Xuất bản/ Nháp</label>
         </div>
 
-        <button type="submit" class="btn btn-primary">Create</button>
-        <a href="/posts" class="btn btn-secondary ms-2">Back to Posts</a>
+        <button type="submit" class="btn btn-primary">Tạo</button>
+        <a href="/posts" class="btn btn-secondary ms-2">Quay lại</a>
     </form>
 
     <!-- TinyMCE CDN -->
@@ -56,5 +68,26 @@
         }
     </script>
 
+    <script>
+        document.getElementById('avatar').addEventListener('change', function () {
+            const file = this.files[0];
+            const fileNameSpan = document.getElementById('fileName');
+
+            if (file) {
+                fileNameSpan.textContent = file.name;
+
+                // Preview image
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.getElementById('avatarPreview');
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            } else {
+                fileNameSpan.textContent = 'Chưa có ảnh';
+            }
+        });
+    </script>
 
     <%- include('../partials/footer') %>

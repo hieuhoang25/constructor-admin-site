@@ -1,15 +1,15 @@
 <%- include('../partials/header') %>
 
-    <h1 class="h4 mb-4 fw-bold">Edit Post</h1>
+    <h1 class="h4 mb-4 fw-bold">Chỉnh sửa bài viết</h1>
 
     <form method="POST" action="/posts/<%= post.id %>/edit" onsubmit="return handleSubmit()">
         <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
+            <label for="title" class="form-label">Tiêu đề</label>
             <input type="text" name="title" id="title" value="<%= post.title %>" class="form-control" required />
         </div>
 
         <div class="mb-3">
-            <label for="content" class="form-label">Content</label>
+            <label for="content" class="form-label">Nội dung</label>
             <textarea name="content" id="content" rows="10" class="form-control">
                 <%= post.content %>
             </textarea>
@@ -18,11 +18,11 @@
         <div class="form-check mb-3">
             <input type="checkbox" name="published" id="published" class="form-check-input" <%=post.published
                 ? "checked" : "" %> />
-            <label class="form-check-label" for="published">Publish</label>
+            <label class="form-check-label" for="published">Xuất bản/ Nháp</label>
         </div>
 
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a href="/posts" class="btn btn-secondary ms-2">Back to Posts</a>
+        <button type="submit" class="btn btn-primary">Cập nhật</button>
+        <a href="/posts" class="btn btn-secondary ms-2">Quay lại</a>
     </form>
 
     <!-- TinyMCE CDN -->

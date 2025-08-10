@@ -1,7 +1,7 @@
 <%- include('../partials/header') %>
 
     <div class="mb-4">
-        <a href="/posts" class="btn btn-secondary">&larr; Back to Posts</a>
+        <a href="/posts" class="btn btn-secondary">&larr; Quay lại</a>
     </div>
 
     <h1 class="fw-bold mb-3">
@@ -9,7 +9,7 @@
     </h1>
 
     <p class="text-muted mb-4">
-        <%= post.published ? '✅ Published' : '🚧 Draft' %> &middot;
+        <%= post.published ? '✅ Đã xuất bản' : '🚧 Nháp' %> &middot;
             <%= new Date(post.created_at).toLocaleString() %>
     </p>
 
